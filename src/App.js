@@ -2,7 +2,8 @@ import React from 'react';
 import Categories from './components/Categories/Categories';
 import Header from './components/Header/Header';
 import Sort from './components/Sort/Sort';
-import PizzaBlock from './components/PizzaBlock/PizzaBlock'
+import PizzaBlock from './components/PizzaBlock/PizzaBlock';
+import pizzas from './assets/pizzas.json';
 
 function App() {
 	return (
@@ -15,17 +16,13 @@ function App() {
 				</div>
 				<h2 className="content__title">Все пиццы</h2>
 				<div className="content__items">
-					<PizzaBlock />
-					<PizzaBlock />
-					<PizzaBlock />
-					<PizzaBlock />
-					<PizzaBlock />
-					<PizzaBlock />
-					<PizzaBlock />
+					{pizzas.map((obj) => (
+						<PizzaBlock key={obj.id} {...obj} />
+					))}
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
 
-export default App
+export default App;
