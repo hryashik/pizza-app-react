@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-function Sort() {
+function Sort({ selectedSort, changeSort }) {
 	const [visible, setVisible] = useState(false);
-	const sortArray = ['Популярности', 'Цене', 'Названию'];
-	const [selectedSort, setSelectedSort] = useState(sortArray[0]);
-	function changeSort(nameSort) {
-		setSelectedSort(nameSort);
+	const sortArray = [
+		{ name: 'Популярности', value: 'rating' },
+		{ name: 'Цене', value: 'price' },
+		{ name: 'Названию', value: 'title' },
+	];
+	function onChangeSort(nameSort) {
+		changeSort(nameSort);
 		setVisible(false);
 	}
 	return (
@@ -24,18 +27,22 @@ function Sort() {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span onClick={() => setVisible(!visible)}>{selectedSort}</span>
+				<span onClick={() => setVisible(!visible)}>
+					{selectedSort.name}
+				</span>
 			</div>
 			{visible && (
 				<div className="sort__popup">
 					<ul>
-						{sortArray.map((sort, idx) => (
+						{sortArray.map((sort) => (
 							<li
-								onClick={() => changeSort(sort)}
-								key={sort}
-								className={selectedSort === sort ? 'active' : ''}
+								onClick={() => onChangeSort(sort)}
+								key={sort.value}
+								className={
+									selectedSort.name === sort.name ? 'active' : ''
+								}
 							>
-								{sort}
+								{sort.name}
 							</li>
 						))}
 					</ul>

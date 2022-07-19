@@ -1,26 +1,19 @@
 import React from 'react';
-import Categories from './components/Categories/Categories';
 import Header from './components/Header/Header';
-import Sort from './components/Sort/Sort';
-import PizzaBlock from './components/PizzaBlock/PizzaBlock';
-import pizzas from './assets/pizzas.json';
+import Main from './pages/Main';
+import { Routes, Route } from 'react-router-dom';
+import Cart from './pages/Cart';
+import Error404 from './pages/Error404/Error404';
 
 function App() {
 	return (
 		<div className="wrapper">
 			<Header />
-			<div className="container">
-				<div className="content__top">
-					<Categories />
-					<Sort />
-				</div>
-				<h2 className="content__title">Все пиццы</h2>
-				<div className="content__items">
-					{pizzas.map((obj) => (
-						<PizzaBlock key={obj.id} {...obj} />
-					))}
-				</div>
-			</div>
+			<Routes>
+				<Route path="/" element={<Main />} />
+				<Route path="/cart" element={<Cart />} />
+				<Route path="/*" element={<Error404 />} />
+			</Routes>
 		</div>
 	);
 }
