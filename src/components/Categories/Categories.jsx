@@ -1,19 +1,10 @@
 import React from 'react';
 
-function Categories({ selectCategory, changeCategory }) {
-	const categories = [
-		'Все',
-		'Мясные',
-		'Вегетарианская',
-		'Гриль',
-		'Острые',
-		'Закрытые',
-	];
-
+function Categories({ categoriesArray, selectCategory, changeCategory }) {
 	return (
 		<div className="categories">
 			<ul>
-				{categories.map((cat, idx) => (
+				{categoriesArray.map((cat, idx) => (
 					<li
 						onClick={() => changeCategory(idx)}
 						className={selectCategory === idx ? 'active' : ''}

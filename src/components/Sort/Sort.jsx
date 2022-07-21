@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 
-function Sort({ selectedSort, changeSort }) {
+function Sort({ sortArray, selectedSort, changeSort }) {
 	const [visible, setVisible] = useState(false);
-	const sortArray = [
-		{ name: 'Популярности', value: 'rating' },
-		{ name: 'Цене', value: 'price' },
-		{ name: 'Названию', value: 'title' },
-	];
-	function onChangeSort(nameSort) {
-		changeSort(nameSort);
+	function onChangeSort(obj) {
+		changeSort(obj);
 		setVisible(false);
 	}
 	return (
@@ -37,7 +32,7 @@ function Sort({ selectedSort, changeSort }) {
 						{sortArray.map((sort) => (
 							<li
 								onClick={() => onChangeSort(sort)}
-								key={sort.value}
+								key={sort.name}
 								className={
 									selectedSort.name === sort.name ? 'active' : ''
 								}
