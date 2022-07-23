@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 function Sort({ sortArray, selectedSort, changeSort }) {
+	const sortRef = useRef();
+	useEffect(() => {
+		function handleClick(event) {
+			if (!event.path.includes(sortRef.current)) {
+				setVisible(false);
+			}
+		}
+		document.body.addEventListener('click', handleClick);
+		return () => document.body.removeEventListener('click', handleClick);
+	}, []);
+
 	const [visible, setVisible] = useState(false);
 	function onChangeSort(obj) {
 		changeSort(obj);
 		setVisible(false);
 	}
 	return (
-		<div className="sort">
+		<div ref={sortRef} className="sort">
 			<div className="sort__label">
 				<svg
 					width="10"
