@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux/es/exports';
 
 function Header(props) {
-	const {positions, totalPrice} = useSelector(state => state.cart)
-	console.log(totalPrice, positions)
+	const { positions, totalPrice } = useSelector((state) => state.cart);
+	const calcPositions = positions.reduce((a, b) => a + b.count, 0);
+	console.log(calcPositions);
+	console.log(totalPrice, positions);
 	return (
 		<div className="header">
 			<div className="container">
@@ -50,7 +52,7 @@ function Header(props) {
 								strokeLinejoin="round"
 							/>
 						</svg>
-						<span>{positions.length}</span>
+						<span>{calcPositions}</span>
 					</Link>
 				</div>
 			</div>
