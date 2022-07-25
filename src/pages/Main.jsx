@@ -6,40 +6,27 @@ import PizzaBlockSkeleton from '../components/PizzaBlock/PizzaBlockSkeleton';
 import { useSort } from '../hooks/useSort';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { changeCategory, changeSort } from '../redux/slices/filterSlice';
-import serviceApi from '../API/api';
-import { setPizzas } from '../redux/slices/pizzaSlice';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 function Main() {
 	const dispatch = useDispatch();
-
-	//Pizzas
-	const pizzasArray = useSelector(state => state.pizzas.pizzasArray);
-
-	useEffect(() => {
-		async function getPizzas() {
-			const response = await serviceApi.getPizzas();
-			dispatch(setPizzas(response.data));
-		}
-
-		getPizzas();
-		window.scrollTo(0, 0);
-	}, [dispatch]);
-
-	//Categories
-	function onChangeCategory(idx) {
-		dispatch(changeCategory(idx));
-	}
-
+	const pizzasArray = useSelector((state) => state.pizzas.pizzasArray);
 	const categoriesArray = useSelector((state) => state.filter.categoriesArray);
 	const selectedCategory = useSelector((state) => state.filter.selectCategory);
-
-	//Sort
 	const { sort } = useSelector((state) => state.filter);
 
-	function onChangeSort(action) {
-		dispatch(changeSort(action));
-	}
+	useEffect(() => {
+		dispatch(fetchPizzas());
+	}, [dispatch]);
 
+	const skeletons = [...new Array(6)].map((_, i) => (
+		<PizzaBlockSkeleton key={i} />
+	));
+
+	const onChangeCategory = (idx) => dispatch(changeCategory(idx));
+	const onChangeSort = (action) => dispatch(changeSort(action));
+
+	// Сортировка и фильтрация массива с пиццами
 	const sortedArr = useSort(pizzasArray, sort.selectedSort);
 	const filtArr = sortedArr.filter((a) => {
 		if (selectedCategory !== 0) {
@@ -49,18 +36,11 @@ function Main() {
 		}
 	});
 
-	const skeletons = [...new Array(6)].map((_, i) => (
-		<PizzaBlockSkeleton key={i} />
-	));
-	const pizzas = filtArr.map((obj) =>
-		<PizzaBlock
-			key={obj.id}
-			{...obj}
-		/>);
+	const pizzas = filtArr.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
 
 	return (
-		<div className='container'>
-			<div className='content__top'>
+		<div className="container">
+			<div className="content__top">
 				<Categories
 					categoriesArray={categoriesArray}
 					selectCategory={selectedCategory}
@@ -72,8 +52,8 @@ function Main() {
 					changeSort={onChangeSort}
 				/>
 			</div>
-			<h2 className='content__title'>Все пиццы</h2>
-			<div className='content__items'>
+			<h2 className="content__title">Все пиццы</h2>
+			<div className="content__items">
 				{pizzasArray.length ? pizzas : skeletons}
 			</div>
 		</div>

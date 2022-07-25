@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux/es/exports';
 function Header(props) {
 	const { positions, totalPrice } = useSelector((state) => state.cart);
 	const calcPositions = positions.reduce((a, b) => a + b.count, 0);
-	console.log(calcPositions);
 	console.log(totalPrice, positions);
 	return (
 		<div className="header">
