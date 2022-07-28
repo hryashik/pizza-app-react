@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const PizzaBlockSkeleton = (props) => (
+const PizzaBlockSkeleton = (props: object) => (
 	<ContentLoader
 		speed={2}
 		width={280}

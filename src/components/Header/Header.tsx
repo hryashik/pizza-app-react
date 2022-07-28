@@ -2,9 +2,17 @@ import logo from '../../assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux/es/exports';
 
-function Header(props) {
-	const { positions, totalPrice } = useSelector((state) => state.cart);
-	const calcPositions = positions.reduce((a, b) => a + b.count, 0);
+type CartType = {
+	positions: object[]
+	totalPrice: number
+}
+
+function Header() {
+	const { positions, totalPrice } = useSelector((state: {cart: CartType}) => state.cart);
+	const calcPositions: number = positions.reduce(
+		(a: number, b: any) => a + b.count,
+		0
+	);
 	console.log(totalPrice, positions);
 	return (
 		<div className="header">

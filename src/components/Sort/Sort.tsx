@@ -1,9 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function Sort({ sortArray, selectedSort, changeSort }) {
-	const sortRef = useRef();
+type SortProperty = {
+	sortArray: []
+	selectedSort: {
+		name: string
+	}
+	changeSort: (arg: {name: string}) => void
+}
+
+function Sort({ sortArray, selectedSort, changeSort }: SortProperty) {
+	const sortRef = useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
-		function handleClick(event) {
+		function handleClick(event: any) {
 			if (!event.path.includes(sortRef.current)) {
 				setVisible(false);
 			}
@@ -13,7 +22,8 @@ function Sort({ sortArray, selectedSort, changeSort }) {
 	}, []);
 
 	const [visible, setVisible] = useState(false);
-	function onChangeSort(obj) {
+	
+	function onChangeSort(obj: {name: string}) {
 		changeSort(obj);
 		setVisible(false);
 	}
@@ -40,7 +50,7 @@ function Sort({ sortArray, selectedSort, changeSort }) {
 			{visible && (
 				<div className="sort__popup">
 					<ul>
-						{sortArray.map((sort) => (
+						{sortArray.map((sort: { name: string }) => (
 							<li
 								onClick={() => onChangeSort(sort)}
 								key={sort.name}

@@ -1,5 +1,16 @@
 import React from 'react';
 
+type CartItemProps = {
+	title: string
+	img: string
+	type: string
+	size: number
+	price: number
+	pizzaCount: number,
+	changeCount: any
+	id: number
+}
+
 function CartItem({
 	title,
 	img,
@@ -9,8 +20,8 @@ function CartItem({
 	pizzaCount,
 	changeCount,
 	id,
-}) {
-	function clickOnChange(text) {
+}: CartItemProps) {
+	function clickOnChange(text: string) {
 		changeCount({ id, price, text });
 	}
 	return (

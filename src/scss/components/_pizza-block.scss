@@ -7,6 +7,12 @@
 
   &__image {
     width: 260px;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.02);
+      transition: 0.2s;
+    }
   }
 
   &__title {

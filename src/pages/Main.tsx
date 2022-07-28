@@ -10,25 +10,25 @@ import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 function Main() {
 	const dispatch = useDispatch();
-	const pizzasArray = useSelector((state) => state.pizzas.pizzasArray);
-	const categoriesArray = useSelector((state) => state.filter.categoriesArray);
-	const selectedCategory = useSelector((state) => state.filter.selectCategory);
-	const { sort } = useSelector((state) => state.filter);
+	const pizzasArray = useSelector((state: any) => state.pizzas.pizzasArray);
+	const categoriesArray = useSelector(
+		(state: any) => state.filter.categoriesArray
+	);
+	const selectedCategory = useSelector(
+		(state: any) => state.filter.selectCategory
+	);
+	const { sort } = useSelector((state: any) => state.filter);
 
 	useEffect(() => {
-		dispatch(fetchPizzas());
+		dispatch<any>(fetchPizzas());
 	}, [dispatch]);
 
-	const skeletons = [...new Array(6)].map((_, i) => (
-		<PizzaBlockSkeleton key={i} />
-	));
-
-	const onChangeCategory = (idx) => dispatch(changeCategory(idx));
-	const onChangeSort = (action) => dispatch(changeSort(action));
+	const onChangeCategory = (idx: number) => dispatch(changeCategory(idx));
+	const onChangeSort = (action: object) => dispatch(changeSort(action));
 
 	// Сортировка и фильтрация массива с пиццами
 	const sortedArr = useSort(pizzasArray, sort.selectedSort);
-	const filtArr = sortedArr.filter((a) => {
+	const filtArr = sortedArr.filter((a: any) => {
 		if (selectedCategory !== 0) {
 			return a.category === selectedCategory;
 		} else {
@@ -36,8 +36,12 @@ function Main() {
 		}
 	});
 
-	const pizzas = filtArr.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
-
+	const pizzas = filtArr.map((obj: any) => (
+		<PizzaBlock key={obj.id} {...obj} />
+	));
+	const skeletons = [...new Array(6)].map((_, i) => (
+		<PizzaBlockSkeleton key={i} />
+	));
 	return (
 		<div className="container">
 			<div className="content__top">

@@ -1,6 +1,12 @@
 import React from 'react';
 
-function Categories({ categoriesArray, selectCategory, changeCategory }) {
+type CategoriesProps = {
+	categoriesArray: string[]
+	selectCategory: number
+	changeCategory: (idx: number) => void
+}
+
+const Categories: React.FC<CategoriesProps> = ({ categoriesArray, selectCategory, changeCategory }) =>  {
 	return (
 		<div className="categories">
 			<ul>

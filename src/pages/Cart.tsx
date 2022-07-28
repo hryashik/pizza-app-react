@@ -4,14 +4,15 @@ import CartItem from '../components/CartItem/CartItem';
 import { useSelector } from 'react-redux/es/exports';
 import { changePizzaCount, clearCart } from '../redux/slices/cartSlice';
 import { useDispatch } from 'react-redux/es/exports';
+import { CartEmpty } from '../components/CartEmpty/CartEmpty';
 
 function Cart() {
 	const dispatch = useDispatch();
 	function clickOnClear() {
 		dispatch(clearCart());
 	}
-	const { positions, totalPrice } = useSelector((state) => state.cart);
-	const cartItems = positions.map((item) => (
+	const { positions, totalPrice } = useSelector((state: any) => state.cart);
+	const cartItems = positions.map((item: any) => (
 		<CartItem
 			title={item.title}
 			img={item.imageUrl}
@@ -24,10 +25,17 @@ function Cart() {
 			id={item.id}
 		/>
 	));
-	function changeCount(obj, text) {
-		dispatch(changePizzaCount(obj, text));
+	function changeCount(obj: any) {
+		dispatch(changePizzaCount(obj));
 	}
-	const calcPositions = positions.reduce((a, b) => a + b.count, 0);
+	const calcPositions = positions.reduce(
+		(a: number, b: any) => a + b.count,
+		0
+	);
+
+	if (!totalPrice) {
+		return <CartEmpty />;
+	}
 
 	return (
 		<div className="container container--cart">
