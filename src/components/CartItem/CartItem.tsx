@@ -7,8 +7,14 @@ type CartItemProps = {
 	size: number
 	price: number
 	pizzaCount: number,
-	changeCount: any
+	changeCount: ({id, price, text}: CartItemObjectType) => void
 	id: number
+}
+
+export type CartItemObjectType = {
+	id: number
+	price: number
+	text: string
 }
 
 function CartItem({

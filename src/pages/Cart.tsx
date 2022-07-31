@@ -1,18 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CartItem from '../components/CartItem/CartItem';
+import CartItem, { CartItemObjectType } from '../components/CartItem/CartItem';
 import { useSelector } from 'react-redux/es/exports';
-import { changePizzaCount, clearCart } from '../redux/slices/cartSlice';
+import {
+	changePizzaCount,
+	clearCart,
+	PizzaCart,
+} from '../redux/slices/cartSlice';
 import { useDispatch } from 'react-redux/es/exports';
 import { CartEmpty } from '../components/CartEmpty/CartEmpty';
+import { RootState } from '../redux/store';
 
 function Cart() {
 	const dispatch = useDispatch();
 	function clickOnClear() {
 		dispatch(clearCart());
 	}
-	const { positions, totalPrice } = useSelector((state: any) => state.cart);
-	const cartItems = positions.map((item: any) => (
+	const { positions, totalPrice } = useSelector(
+		(state: RootState) => state.cart
+	);
+	const cartItems = positions.map((item: PizzaCart) => (
 		<CartItem
 			title={item.title}
 			img={item.imageUrl}
@@ -25,11 +32,11 @@ function Cart() {
 			id={item.id}
 		/>
 	));
-	function changeCount(obj: any) {
+	function changeCount(obj: CartItemObjectType) {
 		dispatch(changePizzaCount(obj));
 	}
 	const calcPositions = positions.reduce(
-		(a: number, b: any) => a + b.count,
+		(a: number, b: PizzaCart) => a + b.count,
 		0
 	);
 

@@ -1,4 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit/';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit/';
+
+export type SortItem = {
+	name: string
+	value: string
+}
+
+export type FilterSliceType = {
+	selectCategory: number
+	categoriesArray: string[]
+	sort: {
+		sortArray: SortItem[]
+		selectedSort: SortItem
+	}
+}
 
 const initialState = {
 	selectCategory: 0,
@@ -28,10 +42,10 @@ const filterSlice = createSlice({
 	name: 'filter',
 	initialState,
 	reducers: {
-		changeCategory(state, action) {
+		changeCategory(state, action: PayloadAction<number>) {
 			state.selectCategory = action.payload;
 		},
-		changeSort(state, action) {
+		changeSort(state, action: PayloadAction<SortItem>) {
 			state.sort.selectedSort = action.payload;
 		},
 	},

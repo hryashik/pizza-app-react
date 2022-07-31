@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { useFindCopy } from '../../hooks/useFindCopy';
 import { addPosition } from '../../redux/slices/cartSlice';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../redux/store';
 
 type PizzaBlockProps = {
 	title: string
@@ -22,9 +23,9 @@ type positionsType = {
 
 const PizzaBlock: React.FC <PizzaBlockProps> = ({ title, price, imageUrl, sizes, types, id }) => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useDispatch(); 
 	//Cart
-	const positions: positionsType = useSelector((state: any) => state.cart.positions);
+	const positions: positionsType = useSelector((state: RootState) => state.cart.positions);
 
 	const [activeType, setActiveType] = useState(0);
 	const [activeSize, setActiveSize] = useState(0);

@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CartItemObjectType } from '../../components/CartItem/CartItem';
 
 // Возвращает найденный элемент массива
-function findCopy(array, obj) {
+function findCopy(array: PizzaCart[], obj: PizzaCart) {
 	return array.find(
 		(item) =>
 			item.title === obj.title &&
@@ -11,11 +12,24 @@ function findCopy(array, obj) {
 }
 
 // Возращает сумму по ключу
-function recalcSum(array) {
+function recalcSum(array: PizzaCart[]) {
 	return array.reduce((sum, b) => sum + b.price * b.count, 0);
 }
 
-const initialState = {
+export type PizzaCart = {
+	title: string
+	imageUrl: string
+	type: string
+	size: number
+	price: number
+	count: number
+	id: number
+}
+interface ICartSlice {
+	positions: PizzaCart[]
+	totalPrice: number
+}
+const initialState: ICartSlice = {
 	positions: [],
 	totalPrice: 0,
 };
@@ -24,7 +38,7 @@ const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		addPosition(state, action) {
+		addPosition(state, action: PayloadAction<PizzaCart>) {
 			const findItem = findCopy(state.positions, action.payload);
 			if (findItem) {
 				findItem.count++;
@@ -37,10 +51,11 @@ const cartSlice = createSlice({
 			state.positions = [];
 			state.totalPrice = 0;
 		},
-		changePizzaCount(state, action) {
+		changePizzaCount(state, action: PayloadAction<CartItemObjectType>) {
 			const findItem = state.positions.find(
 				(item) => item.id === action.payload.id
 			);
+			if(findItem)
 			switch (action.payload.text) {
 				case 'decrement':
 					if (findItem.count === 1) {

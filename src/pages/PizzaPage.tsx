@@ -11,10 +11,13 @@ type PizzaType = {
 const PizzaPage: React.FC = () => {
 	const params = useParams()
 	const [pizza, setPizza] = useState<PizzaType>();
+
 	React.useEffect(() => {
+		if (params.id) {
 		serviceApi
 			.getPizzaByNumber(params.id)
 			.then((response) => setPizza(response.data[0]));
+		}
 	}, [params]);
 
 	if (!pizza) {
